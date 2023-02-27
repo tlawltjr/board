@@ -55,4 +55,6 @@ public interface BoardService {
 		Board board = Board.builder().bno(dto.getBno()).title(dto.getTitle()).content(dto.getContent()).writer(member).build();
 		return board;
 	}
+	//글상세보기 메서드
+	BoardDTO read(Long bno);
 }

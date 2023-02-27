@@ -1,5 +1,7 @@
 package com.fullstack.board.service;
 
+import java.util.Arrays;
+import java.util.Optional;
 import java.util.function.Function;
 
 import org.springframework.data.domain.Page;
@@ -14,6 +16,8 @@ import com.fullstack.board.entity.Board;
 import com.fullstack.board.entity.Member;
 import com.fullstack.board.entity.Reple;
 import com.fullstack.board.repository.BoardRepository;
+import com.fullstack.board.repository.MemberRepository;
+import com.fullstack.board.repository.RepleRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -23,6 +27,7 @@ import lombok.extern.log4j.Log4j2;
 public class BoardServiceImpl implements BoardService{
 
 	private final BoardRepository boardRepository;
+	
 	@Override
 	public Long register(BoardDTO boardDTO) {
 		log.info("신규등록 호출");
@@ -55,6 +60,14 @@ public class BoardServiceImpl implements BoardService{
 		//PageResult 객체 생성 후 리턴시킵니다
 		return new PageResultDTO<>(result, fn);
 	}
-
+	@Override
+	public BoardDTO read(Long bno) {
+		
+		Object ob = boardRepository.getBoardByBno(bno);
+		Object[] arr  = (Object[]) ob;
+		
+		return entityToDto((Board)arr[0], (Member)arr[1], (Long)arr[2]);
+	}
+	
 	
 }

@@ -1,5 +1,7 @@
 package com.fullstack.repository;
 
+import static org.assertj.core.api.Assertions.assertThatObject;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,17 +32,24 @@ public class ServiceTests {
 	
 	
 	//글목록 가져오기 테스트
+//	@Test
+//	public void testList() {
+//		//PageRequestDTO 객체를 생성하면 기본 0페이지, 10개의 목록을 가져오도록 설정됨
+//		PageRequestDTO dto = new PageRequestDTO();
+//		
+//		PageResultDTO<BoardDTO , Object[]> result = boardService.getList(dto);
+//		
+//		for(BoardDTO boardDTO : result.getDtoList()) {
+//			System.out.println(boardDTO);
+//		}
+//		
+//	}
+	
 	@Test
-	public void testList() {
-		//PageRequestDTO 객체를 생성하면 기본 0페이지, 10개의 목록을 가져오도록 설정됨
-		PageRequestDTO dto = new PageRequestDTO();
+	public void testRead() {
 		
-		PageResultDTO<BoardDTO , Object[]> result = boardService.getList(dto);
-		
-		for(BoardDTO boardDTO : result.getDtoList()) {
-			System.out.println(boardDTO);
-		}
-		
+		BoardDTO dto = boardService.read(11L);
+		System.out.println(dto);
 	}
 	
 	
