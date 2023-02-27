@@ -57,4 +57,10 @@ public interface BoardService {
 	}
 	//글상세보기 메서드
 	BoardDTO read(Long bno);
+	
+	//글삭제 메서드
+	void removeWithReplies(Long bno);
+	
+	//글수정 메서드
+	void modify(BoardDTO dto);
 }

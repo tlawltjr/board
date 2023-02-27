@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Function;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -27,6 +29,7 @@ import lombok.extern.log4j.Log4j2;
 public class BoardServiceImpl implements BoardService{
 
 	private final BoardRepository boardRepository;
+	private final RepleRepository repleRepository;
 	
 	@Override
 	public Long register(BoardDTO boardDTO) {
@@ -68,6 +71,26 @@ public class BoardServiceImpl implements BoardService{
 		
 		return entityToDto((Board)arr[0], (Member)arr[1], (Long)arr[2]);
 	}
+	@Transactional
+	@Override
+	public void removeWithReplies(Long bno) {
+		
+		repleRepository.deleteByBno(bno);
+		boardRepository.deleteById(bno);
+		
+	}
+	
+	@Transactional
+	@Override
+	public void modify(BoardDTO dto) {
+		//entity 리턴
+		Board board = boardRepository.getById(dto.getBno());
+		board.changeTitle(dto.getTitle());
+		board.changeContent(dto.getContent());
+		
+		boardRepository.save(board);
+	}
+	
 	
 	
 }

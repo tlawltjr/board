@@ -37,4 +37,14 @@ public class Board extends BaseEntity{
 	//해당 객체의 key를 찾아서 자동으로 테이블 구성을 합니다. 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Member writer;
+	
+	public void changeTitle(String title) {
+		this.title = title;
+	}
+	
+	public void changeContent(String content) {
+		this.content = content;
+	}
+	
+	
 }

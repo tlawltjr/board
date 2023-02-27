@@ -2,6 +2,11 @@ package com.fullstack.repository;
 
 import static org.assertj.core.api.Assertions.assertThatObject;
 
+import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.fullstack.board.dto.BoardDTO;
 import com.fullstack.board.dto.PageRequestDTO;
 import com.fullstack.board.dto.PageResultDTO;
+import com.fullstack.board.entity.Board;
+import com.fullstack.board.repository.BoardRepository;
 import com.fullstack.board.service.BoardService;
 
 @SpringBootTest
@@ -45,14 +52,24 @@ public class ServiceTests {
 //		
 //	}
 	
+//	@Test
+//	public void testRead() {
+//		
+//		BoardDTO dto = boardService.read(11L);
+//		System.out.println(dto);
+//	}
+	
+
+//	@Test
+//	public void delete() {
+//		boardService.removeWithReplies(1L);
+//	}
+	
 	@Test
-	public void testRead() {
-		
-		BoardDTO dto = boardService.read(11L);
-		System.out.println(dto);
+	public void modify() {
+		BoardDTO dto1 = BoardDTO.builder().bno(100L).title("수정 제목").content("수정내용").build();
+		boardService.modify(dto1);
 	}
-	
-	
 	
 	
 }
