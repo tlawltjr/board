@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- 여긴 초기 테스트용을 정의한 부분..실제 게시판의 내용은 이 주석 블락 이후부터 재정의함.-->  
+<!-- /* 
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+	<th:block th:fragment="content">
+		<h1>GuestBook List Page</h1>
+	</th:block>
+</th:block>
+*/-->
+
+       
+
+  
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+	
+	<th:block th:fragment="content">
+		<h1 class="mt-4">Guest Book List Page </h1>
+		<!-- 등록 버튼..이건 리스트 후에 작업 할것.. -->
+		<span>
+			<a th:href="@{/guestbook/register}">
+				<button type="button" class="btn btn-outline-primary">
+				REGISTER
+				</button>
+			</a>
+		</span>
+		 <form action="/guestbook/list" method="get" id="searchForm">
+            <div class="input-group">
+                <input type="hidden" name="page" value = "1">
+                <div class="input-group-prepend">
+                    <select class="custom-select" name="type">
+                        <option th:selected="${pageRequestDTO.type == null}">-------</option>
+                        <option value="t" th:selected="${pageRequestDTO.type =='t'}" >제목</option>
+                        <option value="c" th:selected="${pageRequestDTO.type =='c'}"  >내용</option>
+                        <option value="w"  th:selected="${pageRequestDTO.type =='w'}" >작성자</option>
+                        <option value="tc"  th:selected="${pageRequestDTO.type =='tc'}" >제목 + 내용</option>
+                        <option value="tcw"  th:selected="${pageRequestDTO.type =='tcw'}" >제목 + 내용 + 작성자</option>
+                    </select>
+                </div>
+                <input class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}">
+                <div class="input-group-append" id="button-addon4">
+                    <button class="btn btn-outline-secondary btn-search" type="button">Search</button>
+                    <button class="btn btn-outline-secondary btn-clear" type="button">Clear</button>
+                </div>
+            </div>
+        </form>
+		
+		<table class="table table=striped">
+			<thead>
+				<tr>
+					<th scope="col">
+						#
+					</th>
+					<th scope="col">
+						bno
+					</th>
+					<th scope="col">
+						Title
+					</th>
+					<th scope="col">
+						RegDate
+					</th>
+				</tr>
+			</thead>
+			
+			<!-- PageResultDTO.dtoList 의 이름으로 호출한다.. -->
+			<tbody>
+				<tr th:each="dto : ${PageResObj.dtoList}">
+					<th scope="row">
+					<a th:href="@{/guestbook/read(bno=${dto.bno}, page=${PageResObj.page})}">[[${dto.bno}]]</a>
+					[[${dto.bno}]]
+					</th>
+					<td>[[${dto.bno}]]</td>
+					<td>[[${dto.title}]]</td>
+					<td>[[${#temporals.format(dto.regDate,'yyyy/MM/dd')}]]</td>
+				</tr>
+			</tbody>
+		</table>
+		<!--  
+	<ul class="pagination h-100 justify-content-center align-items-center">
+		<li class="page-item" th:if="${PageResObj.prev}">
+			<a th:href="@{/guestbook/list(page=${PageResObj.start -1})}">Previews</a>
+		</li>
+		
+		<li class="page-item + ${list.page==page?'activie'':'}" 
+		th:each="page : ${list.pageList}">
+			<a class="page-link" th:href="@{/guestbook/list(page=${page})}">[[${page}]]</a>
+		</li>
+		
+		<li class="page-item" th:if="${list.next}">
+			<a class="page-link"  
+			th:href="@{/guestbook/list(page=${list.end + 1})}">Next</a>
+		</li>
+	</ul>
+	-->
+	 <div class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">글등록 결과</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                   		<p th:if="${msg > 0}">[[${msg}]]글이 등록 되었습니다.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script th:Inline="javascript">
+       	//글 신규 등록 후 스크립트 처리 th:Inline 속성
+       	var msg = [[${msg}]];
+        console.log(msg);
+        
+        if(msg){
+        	$(".modal").modal();
+        }
+        </script>
+        
+	</th:block>
+
+	
+</th:block>
