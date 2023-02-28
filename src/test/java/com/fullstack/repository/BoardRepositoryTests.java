@@ -25,16 +25,16 @@ public class BoardRepositoryTests {
 	@Autowired
 	private BoardRepository boardRepository;
 	
-//	@Test
-//	public void insertMember() {
-//		IntStream.rangeClosed(1, 100).forEach(i->{
-//			Member member = Member.builder().email("tlawltjr" + i + "@abc.com").build();
-//			Board board = Board.builder().title("제목" + i).content("이건 글내용" + i).writer(member).build();
-//			
-//			boardRepository.save(board);
-//		});
-//	}
-//	
+	@Test
+	public void insertMember() {
+		IntStream.rangeClosed(1, 100).forEach(i->{
+			Member member = Member.builder().email("tlawltjr" + i + "@abc.com").build();
+			Board board = Board.builder().title("제목" + i).content("이건 글내용" + i).writer(member).build();
+			
+			boardRepository.save(board);
+		});
+	}
+	
 	//JPQL 실행 테스트 하기
 	//JPQL로 수행한 데이터가 리턴될때는 기본적으로 Object타입으로 리턴되어집니다
 	//이때 실제 데이터(엔티티 객체)는 위 Object 내에 Object[]형태로 구성되어집니다

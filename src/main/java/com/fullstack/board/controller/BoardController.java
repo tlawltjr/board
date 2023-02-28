@@ -3,8 +3,12 @@ package com.fullstack.board.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fullstack.board.dto.BoardDTO;
 import com.fullstack.board.dto.PageRequestDTO;
 import com.fullstack.board.service.BoardService;
 
@@ -27,6 +31,24 @@ public class BoardController {
 		log.info("리스트 페이지 요청");
 		model.addAttribute("PageResObj", boardService.getList(pageRequestDTO));
 	}
-	
-	
+	//신규 글등록 요청 처리
+	@GetMapping("/register")
+	public void getRegister() {
+		log.info("신규글등록");
+	}
+	@PostMapping("/register")
+	public String register(BoardDTO boardDTO, RedirectAttributes redirectAttributes) {
+		
+		Long bno = boardService.register(boardDTO);
+		redirectAttributes.addFlashAttribute("msg", bno);
+		return "redirect:/board/list";
+		
+	}
+	@GetMapping("/read")
+	public void read(@ModelAttribute("requestDTO") PageRequestDTO pageRequestDTO, Long bno, Model model) {
+		
+		BoardDTO boardDTO = boardService.read(bno);
+		
+		model.addAttribute("dto",boardDTO);
+	}
 }

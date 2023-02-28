@@ -4,7 +4,7 @@
 <!-- /* 
 <th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
 	<th:block th:fragment="content">
-		<h1>GuestBook List Page</h1>
+		<h1>board List Page</h1>
 	</th:block>
 </th:block>
 */-->
@@ -18,13 +18,13 @@
 		<h1 class="mt-4">Guest Book List Page </h1>
 		<!-- 등록 버튼..이건 리스트 후에 작업 할것.. -->
 		<span>
-			<a th:href="@{/guestbook/register}">
+			<a th:href="@{/board/register}">
 				<button type="button" class="btn btn-outline-primary">
 				REGISTER
 				</button>
 			</a>
 		</span>
-		 <form action="/guestbook/list" method="get" id="searchForm">
+		 <form action="/board/list" method="get" id="searchForm">
             <div class="input-group">
                 <input type="hidden" name="page" value = "1">
                 <div class="input-group-prepend">
@@ -49,13 +49,13 @@
 			<thead>
 				<tr>
 					<th scope="col">
-						#
-					</th>
-					<th scope="col">
-						bno
+						BNO
 					</th>
 					<th scope="col">
 						Title
+					</th>
+					<th scope="col">
+						WriterEamil
 					</th>
 					<th scope="col">
 						RegDate
@@ -67,32 +67,32 @@
 			<tbody>
 				<tr th:each="dto : ${PageResObj.dtoList}">
 					<th scope="row">
-					<a th:href="@{/guestbook/read(bno=${dto.bno}, page=${PageResObj.page})}">[[${dto.bno}]]</a>
+					<a th:href="@{/board/read(bno=${dto.bno}, page=${PageResObj.page})}">[[${dto.bno}]]</a>
 					[[${dto.bno}]]
 					</th>
-					<td>[[${dto.bno}]]</td>
-					<td>[[${dto.title}]]</td>
+					<td>[[${dto.title}]]----->[<b th:text="${dto.repleCount}"></b>]</td>
+					<td>[[${dto.writereEmail}]] : 이름 : [[${dto.writereName}]]</td>
 					<td>[[${#temporals.format(dto.regDate,'yyyy/MM/dd')}]]</td>
 				</tr>
 			</tbody>
 		</table>
-		<!--  
+		  
 	<ul class="pagination h-100 justify-content-center align-items-center">
 		<li class="page-item" th:if="${PageResObj.prev}">
-			<a th:href="@{/guestbook/list(page=${PageResObj.start -1})}">Previews</a>
+			<a th:href="@{/board/list(page=${PageResObj.start -1})}">Previews</a>
 		</li>
 		
-		<li class="page-item + ${list.page==page?'activie'':'}" 
-		th:each="page : ${list.pageList}">
-			<a class="page-link" th:href="@{/guestbook/list(page=${page})}">[[${page}]]</a>
+		<li class="page-item + ${PageResObj.page==page?'activie'':'}" 
+		th:each="page : ${PageResObj.pageList}">
+			<a class="page-link" th:href="@{/board/list(page=${page})}">[[${page}]]</a>
 		</li>
 		
-		<li class="page-item" th:if="${list.next}">
+		<li class="page-item" th:if="${PageResObj.next}">
 			<a class="page-link"  
-			th:href="@{/guestbook/list(page=${list.end + 1})}">Next</a>
+			th:href="@{/board/list(page=${PageResObj.end + 1})}">Next</a>
 		</li>
 	</ul>
-	-->
+	
 	 <div class="modal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
