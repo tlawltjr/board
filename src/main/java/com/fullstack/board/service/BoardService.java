@@ -62,5 +62,5 @@ public interface BoardService {
 	void removeWithReplies(Long bno);
 	
 	//글수정 메서드
-	void modify(BoardDTO dto);
+	void modify(BoardDTO boardDTO);
 }

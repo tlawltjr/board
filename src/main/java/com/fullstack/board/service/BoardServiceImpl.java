@@ -81,15 +81,19 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Transactional
-	@Override
-	public void modify(BoardDTO dto) {
-		//entity 리턴
-		Board board = boardRepository.getById(dto.getBno());
-		board.changeTitle(dto.getTitle());
-		board.changeContent(dto.getContent());
-		
-		boardRepository.save(board);
-	}
+    @Override
+    public void modify(BoardDTO boardDTO) {
+
+        Board board = boardRepository.getOne(boardDTO.getBno());
+
+        if(board != null) {
+
+            board.changeTitle(boardDTO.getTitle());
+            board.changeContent(boardDTO.getContent());
+
+            boardRepository.save(board);
+        }
+    }
 	
 	
 	

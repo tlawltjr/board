@@ -15,7 +15,7 @@
 <th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
 	
 	<th:block th:fragment="content">
-		<h1 class="mt-4">Guest Book List Page </h1>
+		<h1 class="mt-4">Board List Page </h1>
 		<!-- 등록 버튼..이건 리스트 후에 작업 할것.. -->
 		<span>
 			<a th:href="@{/board/register}">
@@ -58,6 +58,9 @@
 						WriterEamil
 					</th>
 					<th scope="col">
+						Name
+					</th>
+					<th scope="col">
 						RegDate
 					</th>
 				</tr>
@@ -71,7 +74,8 @@
 					[[${dto.bno}]]
 					</th>
 					<td>[[${dto.title}]]----->[<b th:text="${dto.repleCount}"></b>]</td>
-					<td>[[${dto.writereEmail}]] : 이름 : [[${dto.writereName}]]</td>
+					<td>[[${dto.writereEmail}]]</td>
+					<td>[[${dto.writereName}]]</td>
 					<td>[[${#temporals.format(dto.regDate,'yyyy/MM/dd')}]]</td>
 				</tr>
 			</tbody>

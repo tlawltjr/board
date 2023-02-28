@@ -25,12 +25,12 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "board")
 public class Reple extends BaseEntity{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long pno;
+	private Long pno;
 	private String text;
 	private String repler;
 	

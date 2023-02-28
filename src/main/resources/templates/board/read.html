@@ -237,8 +237,8 @@
 		//내부에 rno 를 찾아서 바인딩한다.
 		$('.replyList').on("click", ".card-body",function(){
 			
-			//$(this).data("rno") --> 위 card-body 내에서 사용된 
-			//str += '    <div class="card-body" data-rno="'+reply.rno+'"><b>'+reply.rno +'</b>'; 이다.
+			//$(this).data("rno")  위 card-body 내에서 사용된 
+			str += '    <div class="card-body" data-rno="'+reply.rno+'"><b>'+reply.rno +'</b>'; 이다.
 			
 			var rno = $(this).data("rno");
 			//alert(rno);
@@ -254,6 +254,7 @@
 		})
 		
 		//삭제버튼 클릭시
+		
 		$('.replyRemove').on("click", function(){
 			var rno = $("input[name='rno']").val();//모달창에 보이는 댓글번호는 hidden 처리됨
 			
