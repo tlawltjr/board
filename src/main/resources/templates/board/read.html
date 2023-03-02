@@ -8,8 +8,8 @@
 		<h1 class="mt-4">Board Read Page</h1>
 
 		<div class="form-group">
-			<label>Bno</label> <input type="text" class="form-control"
-				name="bno" th:value="${dto.bno}" readonly>
+			<label>Bno</label> <input type="text" class="form-control" name="bno"
+				th:value="${dto.bno}" readonly>
 		</div>
 
 		<div class="form-group">
@@ -46,22 +46,21 @@
 			th:href="@{/board/list(page=${requestDTO.page} , type=${requestDTO.type}, keyword =${requestDTO.keyword})}">
 			<button type="button" class="btn btn-info">List</button>
 		</a>
-		<!-- 댓글 추가 레이블과, 댓글 수 등을 표시하는 Label 작성합니다 -->		
+		<!-- 댓글 추가 레이블과, 댓글 수 등을 표시하는 Label 작성합니다 -->
 		<div>
 			<div class="mt-4">
 				<h5>
-					<span class="badge badge-info addReple">댓글 추가
-					</span>
+					<span class="badge badge-info addReple">댓글 추가 </span>
 				</h5>
 				<h5>
 					<span class="badge badge-secondary repleCount">댓글 보기
-						[[${dto.repleCount}]]
-					</span>
+						[[${dto.repleCount}]] </span>
 				</h5>
 			</div>
 			<div class="list-group repleList"></div>
-		</div><!-- 레이블 정의 끝 -->
-		
+		</div>
+		<!-- 레이블 정의 끝 -->
+
 
 		<!-- Modal 시작.. -->
 		<div class="modal" tabindex="-1" role="dialog">
@@ -269,18 +268,45 @@
 			
 			//ajax 처리
 			$.ajax({
-                        url: '/reple/' + pno,
-                        method: 'delete',
-
-                        success: function(result){
-                            console.log("result: " + result);
-                            if(result ==='success'){
-                                alert("댓글이 삭제되었습니다");
-                                modal.modal('hide');
-                                loadJSONData();
-                            }
-                        }
-                    })
+	            url: '/reple/' + pno,
+	            method: 'delete',
+	
+	            success: function(result){
+	                console.log("result: " + result);
+	                if(result ==='success'){
+	                    alert("댓글이 삭제되었습니다");
+	                    modal.modal('hide');
+	                    loadJSONData();
+                   }
+                 }
+             })
+		});
+		$(".repleModify").click(function(){
+			var pno = $('input[name="pno"]').val();
+			var reple = {
+				bno : bno,
+				text : $('input[name="repleText"]').val(),
+				repler : $('input[name="repler"]').val()
+			}				
+			console.log(JSON.stringify(reple))
+			//ajax 처리
+			$.ajax({
+					url : '/reple/' + pno,
+					method : 'put',
+					data : JSON.stringify(reple),
+					contentType : 'application/json; charset=utf-8',
+					dataType : 'json',
+					success : function(data){
+						console.log(data);
+						
+						var newPno = parseInt(data);
+						alert(newPno + "댓글이 등록되었습니다.");
+						modal.modal('hide');
+						loadJSONData();
+					}
+					
+					
+				})//ajax 끝
 		});
 		
 		
