@@ -284,6 +284,7 @@
 		$(".repleModify").click(function(){
 			var pno = $('input[name="pno"]').val();
 			var reple = {
+				pno : pno,
 				bno : bno,
 				text : $('input[name="repleText"]').val(),
 				repler : $('input[name="repler"]').val()
@@ -295,14 +296,14 @@
 					method : 'put',
 					data : JSON.stringify(reple),
 					contentType : 'application/json; charset=utf-8',
-					dataType : 'json',
-					success : function(data){
-						console.log(data);
+					success : function(result){
+						console.log("result : " + result);
 						
-						var newPno = parseInt(data);
-						alert(newPno + "댓글이 등록되었습니다.");
-						modal.modal('hide');
-						loadJSONData();
+						if(result == 'success'){
+							alert("댓글이 수정되었습니다.");
+							modal.modal('hide');
+							loadJSONData();
+						}
 					}
 					
 					
