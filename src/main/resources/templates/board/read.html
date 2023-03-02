@@ -232,10 +232,58 @@
 					
 				})//ajax 끝
 				
-				
 			});//save 끝
 			
 		});//댓글추가이벤트 끝
+		
+		/*
+		댓글 삭제 작업 : 위에서 댓글을 뿌려주는 class 속성을 이용해서 댓글을 클릭하면 
+		내용과 작성자의 값을 가진 모달을 띄워주고 삭제, 수정 버튼을 활성화 합니다
+		그리고 댓글이 삭제 , 업뎃 할때 필요한 키값인 pno를 찾아서 내부적으로
+		바인딩(hidden)한뒤 delete 메서드로 서버에 전송을 합니다.
+		*/
+		$(".repleList").on("click",".card-body",function(){
+			//삭제, 업댓할때 필요한 reple번호 값을 찾아서 변수로 할당합니다.
+			var pno = $(this).data("pno");
+			
+			//alert(pno);
+			//alert($(this).find('.card-title')).html();
+			
+			 $("input[name='repleText']").val( $(this).find('.card-title').html());
+             $("input[name='repler']").val( $(this).find('.card-subtitle').html());
+             $("input[name='pno']").val(pno);
+
+             $(".modal-footer .btn").hide();
+             $(".repleRemove, .repleModify, .repleClose").show();
+
+             modal.modal('show');
+
+		});
+		
+		//remove에 이벤트 처리후 데이터 전송하기
+		//ajax 로 데이터 전송을 해야하기 때문에, ajax로 전송합니다
+		//삭제를 요청하는 것이라, method 방식은 delete로 주고 서버에서도 
+		//delete 메서드로 매핑해야합니다
+		$(".repleRemove").on("click",function(){
+			var pno = $("input[name='pno']").val();
+			
+			//ajax 처리
+			$.ajax({
+                        url: '/reple/' + pno,
+                        method: 'delete',
+
+                        success: function(result){
+                            console.log("result: " + result);
+                            if(result ==='success'){
+                                alert("댓글이 삭제되었습니다");
+                                modal.modal('hide');
+                                loadJSONData();
+                            }
+                        }
+                    })
+		});
+		
+		
 	});//ready 끝
 		
 		

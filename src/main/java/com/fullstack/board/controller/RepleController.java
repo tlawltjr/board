@@ -1,5 +1,6 @@
 package com.fullstack.board.controller;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,6 +51,17 @@ public class RepleController {
 		log.warn("Ajax 통신 댓글 등록 요청옴 bno---> " + repleDTO.getBno());
 		Long pno = repleService.register(repleDTO);
 		return new ResponseEntity<>(pno, HttpStatus.OK);
+	}
+	/*
+	 * 댓글 삭제 메서드 getListByBoard() 처럼 요청에 바로 댓글 넘버로 오기 때문에
+	 * 맵핑설정을 {}로 해줘야 하고 ajax로 삭제 요청이기에, delete 매핑을 해야합니다
+	 * service를 이용해서 삭제 후 결과 메세지는 String으로 success로 주고 상태 코드는
+	 * OK를 줍니다. 
+	 */
+	@DeleteMapping("/{pno}")
+	public ResponseEntity<String> remove(@PathVariable("pno") Long pno){
+		repleService.remove(pno);
+		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 	
 }
