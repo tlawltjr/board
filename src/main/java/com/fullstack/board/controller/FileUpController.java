@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -54,9 +55,9 @@ public class FileUpController {
 		
 		return "redirect:/success";
 	}
-//	@GetMapping("/success")
-//	public void success() {
-//		log.info("파일 저장 완료");
-//	}
+	@GetMapping("/success")
+	public void success() {
+		log.info("파일 저장 완료");
+	}
 	
 }
