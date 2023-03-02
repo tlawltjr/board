@@ -2,6 +2,8 @@ package com.fullstack.board.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,7 +37,19 @@ public class RepleController {
 		log.info("bno------>" + bno);
 		return new ResponseEntity<>(repleService.getList(bno), HttpStatus.OK);
 	}
-	
-	
+	//댓글등록 메서드 정의
+	/*
+	 * http 프로토콜에서 정의한 데이터 전송 메서드 종류
+	 * 요청된 메서드에 JSON 객체를 바인딩한 객체가 필요합니다
+	 * 일반적으로 문서의 링크등을 통해서 요청되는 형태는 RequestDTO에 바인딩이 되지만 
+	 * 지금처럼 REST 형태로 올 경우에 요청시 같이 보내준 컨텐트 바디를 지정을 해줘야만 
+	 * DTO에 매핑이 되어집니다. 해당 어노테이션이 RequestBody 입니다.
+	 */
+	@PostMapping("")
+	public ResponseEntity<Long> register(@RequestBody RepleDTO repleDTO){
+		log.warn("Ajax 통신 댓글 등록 요청옴 bno---> " + repleDTO.getBno());
+		Long pno = repleService.register(repleDTO);
+		return new ResponseEntity<>(pno, HttpStatus.OK);
+	}
 	
 }

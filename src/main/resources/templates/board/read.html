@@ -163,7 +163,6 @@
 				loadJSONData();
 			});
 			
-		});//ready 끝
 		
 		//console.log(JSON.stringify({x:5, y:6}));
 		//console.log({x:[10,undefined,function(){},symbol('')]});
@@ -175,12 +174,12 @@
 		
 		//댓글 추가부터 작업
 		$(".addReple").click(function(){
-			modal.modal('show');
+			modal.modal("show");
 			
 			//댓글 입력시 모달 input tag 값 초기화
 			//문법 : input[name="name"].val(메서드 호출)
-			$(input[name='repleText']).val('');
-			$(input[name='repler']).val('');
+			$('input[name="repleText"]').val("");
+			$('input[name="repler"]').val("");
 			
 			//버튼을 전부 hide() Root div를 hide() 시키면 됩니다.
 			$(".modal-footer .btn").hide();
@@ -188,8 +187,56 @@
 			//save,close만 활성화 하기
 			//하나 이상의 클래스는 ","를 기준으로 나열만 하면 됩니다.
 			$(".repleSave,.repleClose").show();
+			
+			$(".repleSave").click(function(){
+				//JSON 주고 받도록 RestController로 지정
+				//Reple패스 경로로 JSON 사용자의 댓글 값을 JSON으로 변경해서
+				//보내줘야합니다. 글이 입력되는 형태이기 때문에 전송은 POST방식으로 할겁니다.
+				var reple = {
+					bno : bno,
+					text : $('input[name="repleText"]').val(),
+					repler : $('input[name="repler"]').val()
+				}				
+				//위 값을 콘솔에 JSON값으로 보내는 메서드 stringify()를 이용해서 출력
+				console.log(JSON.stringify(reple))
+				
+				//jQ.ajax()를 이용해서 댓글 내용을 서버로 보내고 서버의 
+				//응답을 받아서 alert()로 띄우고 모달을 종료합니다.
+				
+				/*
+				$.ajax(
+					url : 서버패스경로(필수),
+					method : GET or POST,
+					data : JSON.stringify(data),
+					contentType : application/json;charset,
+					dataType : 'type'(이 속성은 서버로 부터 받은 데이터 타입임),
+					success : function(){서버로의 응답이 성공이 왔을때, 구현 롤백 메서드},
+					error : function(){서버로부터 응답이 200 OK가 아닌 다른 값이 왔을때 구현체}
+				)
+				*/
+				$.ajax({
+					url : '/reple/',
+					method : 'post',
+					data : JSON.stringify(reple),
+					contentType : 'application/json; charset=utf-8',
+					dataType : 'json',
+					success : function(data){
+						console.log(data);
+						
+						var newPno = parseInt(data);
+						alert(newPno + "댓글이 등록되었습니다.");
+						modal.modal('hide');
+						loadJSONData();
+					}
+					
+					
+				})//ajax 끝
+				
+				
+			});//save 끝
+			
 		});//댓글추가이벤트 끝
-		
+	});//ready 끝
 		
 		
 		
